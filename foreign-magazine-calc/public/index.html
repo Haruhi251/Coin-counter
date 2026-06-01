@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Editorial — Premium Magazine Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            padding: 40px 20px; 
+            background-color: #faf8f5; 
+            color: #333333; 
+            max-width: 940px; 
+            margin: 0 auto;
+            letter-spacing: 0.03em;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 40px; 
+            border-bottom: 1px solid #e6e1da;
+            padding-bottom: 25px;
+        }
+        .magazine-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #c5a880;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        h1 { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.6rem; 
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #111;
+            line-height: 1;
+        }
+        .issue-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: #888;
+            margin-top: 12px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 25px; 
+            margin-bottom: 35px;
+            align-items: stretch; 
+        }
+        
+        .content-area {
+            flex: 1.4; 
+            display: flex;
+        }
+        .story-card {
+            background: #ffffff;
+            border: 1px solid #e6e1da;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+            text-align: center;
+            width: 100%; 
+            box-sizing: border-box; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.1s;
+        }
+        .story-category {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #c5a880;
+            margin-bottom: 8px;
+        }
+        .story-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .story-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #444;
+            text-align: justify;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* 🌟 ストーリー用の美しい日本語訳スタイルにゃ */
+        .story-ja {
+            font-size: 0.85rem;
+            color: #666666;
+            line-height: 1.6;
+            margin-top: 20px;
+            text-align: justify;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            border-top: 1px solid #f5f2eb;
+            padding-top: 15px;
+        }
+
+        .sidebar-area {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e6e1da;
+            border-radius: 12px;
+            padding: 24px 28px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        .sidebar-title {
+            font-family: 'Cormorant Garamond', serif;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #111;
+            padding-bottom: 5px;
+        }
+        .classified-item {
+            border-bottom: 1px dashed #f5f2eb;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .classified-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .classified-tag {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #c5a880;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .classified-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: #222;
+            margin: 0;
+        }
+        
+        .classified-ja {
+            font-size: 0.75rem;
+            color: #666666;
+            display: block;
+            margin-top: 4px;
+            margin-bottom: 2px;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .classified-contact {
+            font-size: 0.65rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 2px;
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navigation-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn-enter { 
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            color: #111;
+            text-decoration: none; 
+            border-bottom: 1px solid #111;
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+        .btn-enter:hover { 
+            color: #c5a880;
+            border-bottom: 1px solid #c5a880;
+            letter-spacing: 4px; 
+        }
+
+        @media (max-width: 850px) {
+            h1 { font-size: 2.4rem; }
+            .main-layout { flex-direction: column; gap: 20px; }
+            .story-card, .sidebar-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="magazine-tag">The Modern Journal</div>
+        <h1>The Daily Editorial</h1>
+        <div class="issue-date">Monday, June 1, 2026 — Vol. 01</div>
+    </header>
+
+    <div class="main-layout">
+        <div class="content-area">
+            <div class="story-card">
+                <div class="story-category">Featured Mystery</div>
+                <h2 class="story-title" id="mystery-title">Loading Tale...</h2>
+                <p class="story-text" id="mystery-body">The pages are turning...</p>
+                <p class="story-ja" id="mystery-ja"></p>
+            </div>
+        </div>
+
+        <div class="sidebar-area">
+            <div>
+                <h3 class="sidebar-title">Classifieds</h3>
+                <div id="classifieds-container">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-area">
+        <a href="/calc" class="btn-enter">Launch Denominational Calculator ➔</a>
+    </div>
+
+    <script>
+        // --- 🕵️‍♂️ メインストーリーの極上翻訳データ ---
+        const mysteries = [
+            {
+                title: "The Missing Diamond",
+                body: "A wealthy man locked his priceless blue diamond inside a heavy steel safe. The next morning, it had completely vanished. The room was locked from the inside, and the only clue left behind was a single drop of fresh rain on the vintage Persian carpet.",
+                ja: "ある資産家が、時価数億円のブルーダイヤモンドを頑丈な鋼鉄の金庫に封印した。しかし翌朝、金庫はもぬけの殻となっていた。部屋は内側から完全に密室状態。残された唯一の痕跡は、年代物のペルシャ絨毯にぽつりと滲む、一滴の奇妙な雨の跡だけだった。"
+            },
+            {
+                title: "The Midnight Footsteps",
+                body: "Every single night at exactly 12:05 AM, heavy footsteps echoed through the empty, dusty corridors of the old town library. Intrigued, Detective Leo hid inside a hollow grandfather clock, only to discover a secret mechanism that opened a hidden wall behind the history shelf.",
+                ja: "毎夜決まって12時5分になると、誰もいないはずの古い町立図書館の静まり返った廊下に、重々しい足音が響き渡る。好奇心に駆られた探偵レオは、中が空洞になった大きな柱時計に身を潜めた。そこで彼が目にしたのは、歴史書の棚を反転させる、秘密の隠し仕掛けの作動する瞬間だった。"
+            },
+            {
+                title: "The Smuggler's Letter",
+                body: "A mysterious coded letter arrived at the chaotic desk of Inspector Vance. It looked like ordinary gossip, but Vance smiled. He knew the trick: by reading only the very first letter of each word, the secret location of the phantom ship was elegantly revealed.",
+                ja: "ヴァンス警部の乱雑なデスクに、一通の奇妙な暗号手紙が届けられた。一見すると他愛のない世間話のようだったが、警部はニヤリと笑った。仕掛けはこうだ。各単語の「最初の1文字」だけを繋げて読んでいくと、闇夜に消えた密輸船の隠し港が、鮮やかに浮かび上がるのである。"
+            }
+        ];
+
+        // --- 📰 100種類の架空三行広告（より自然で小粋な表現に完全リファイン） ---
+        const classifiedsPool = [
+            { tag: "HELP WANTED", text: "Seeking an expert detective to find a missing semicolon causing a midnight server crash.", ja: "深夜のサーバークラッシュを引き起こした、行方不明の『セミコロン』を大捜索中。腕利きの探偵求む。", contact: "Call Ext. 404-NODE" },
+            { tag: "FOR SALE", text: "Three perfectly ripe golden bananas. Excel at boosting developer brainpower and digestion.", ja: "極上の完熟ゴールデンバナナ3本セット。開発者の脳の活性化と、お腹の調子を整えるのに抜群の効果。", contact: "Box 888-BANANA" },
+            { tag: "LOST & FOUND", text: "Lost: One Docker container containing a ghost that hoards memory. Last seen near port 8000.", ja: "失踪：メモリを喰らうお化けが潜むDockerコンテナ。最後に目撃されたのはポート8000付近。", contact: "Reward offered. Contact Inspector D." },
+            { tag: "SERVICES", text: "Professional code-whisperer. I talk to stubborn computers so you don't have to.", ja: "プロフェッショナル・コードリスナー。あなたの代わりに、ヘソを曲げた頑固なコンピューターと言葉を交わします。", contact: "Web: custom-server.io" },
+            { tag: "PERSONALS", text: "Gourmet cat looking for a cozy laptop keyboard to sleep on. Must be warm and running Node.js.", ja: "グルメな猫がお昼寝用の特等席を探しています。Node.jsが稼働中の、ほどよく温まったキーボードが理想。", contact: "Meow at Box 777" },
+            { tag: "WANTED", text: "The secret recipe for the ultimate hamburger sauce. Will trade a chest of vintage code for it.", ja: "究極のハンバーガーソースの秘密のレシピを募集。お礼にヴィンテージコードの詰まった宝箱を差し上げます。", contact: "Secret Agent M." },
+            { tag: "FOR RENT", text: "Hollow grandfather clock in the old library. Excellent hiding spot for mystery writers.", ja: "古い図書館にある、中が空洞になった大きな柱時計。ミステリー作家の隠れ場所に最適。", contact: "Apply at Front Desk" },
+            { tag: "SERVICES", text: "Vintage typewriters tuned and calibrated for drafting dramatic thriller novels.", ja: "極上のサスペンス小説を紡ぐために、完璧にメンテナンスされたヴィンテージ・タイプライター。", contact: "The Ink & Key Shop" },
+            { tag: "HELP WANTED", text: "Night watchman needed for a chaotic warehouse. Must not be afraid of giant, friendly spiders.", ja: "夜間警備員募集（少々混沌とした倉庫）。巨大だけど人懐っこいクモたちと仲良くできる方。", contact: "Warehouse Sec. 12" },
+            { tag: "FOR SALE", text: "Antique magnifying glass. Rumored to reveal hidden HTML comments in old layouts.", ja: "アンティークの虫眼鏡。古いレイアウトに隠された、秘密のHTMLコメントを浮かび上がらせると噂の一品。", contact: "Box 99-GLASS" },
+            { tag: "LOST & FOUND", text: "Found: A key to an iron safe. Found inside a vintage Persian carpet after a rainy night.", ja: "拾得：鉄製金庫の鍵。雨が降った夜の翌朝、ヴィンテージのペルシャ絨毯の中から発見。", contact: "Claim at Police HQ" },
+            { tag: "ANNOUNCEMENT", text: "The Midnight Cryptography Club will meet behind the history shelf tonight at 12:05 AM.", ja: "【告知】深夜の暗号解読クラブは、今夜12時5分、歴史書コーナーの棚の裏にて集会を行います。", contact: "Password required." },
+            { tag: "WANTED", text: "Calculators that don't judge you when you check what 7 + 5 equals for the fourth time.", ja: "『7 + 5』の答えを4回連続で確かめても、あなたを冷ややかな目で見ない寛大な計算機を募集。", contact: "Box 123-HELP" },
+            { tag: "FOR RENT", text: "A tiny cottage with a fireplace and zero internet. Perfect for curing severe writer's block.", ja: "暖炉があり、ネットが一切繋がらない小さな隠れ家。深刻な執筆スランプを治療するのに最適です。", contact: "Inkwell Realty" },
+            { tag: "SERVICES", text: "Custom CSS architecture. I build layout walls stronger than medieval fortress barriers.", ja: "オーダーメイドのCSS設計。中世の要塞の壁よりも頑丈で崩れないレイアウトを築きます。", contact: "Modern Grid Co." },
+            { tag: "HELP WANTED", text: "Looking for an accountant who can count gold coins without getting distracted by shiny things.", ja: "キラキラ光るお宝に心を奪われずに、黙々と金貨を数え続けられる強靭な精神の会計士を募集中。", contact: "The Dragon's Vault" },
+            { tag: "FOR SALE", text: "Vintage leather trench coat. Instantly increases detective credibility by 150%.", ja: "ヴィンテージのレザートレンチコート。羽織るだけで探偵としての説得力が150%増します。", contact: "Box 007-COAT" },
+            { tag: "LOST & FOUND", text: "Lost: A notebook full of serialized narrative plots. If found, please do not read the twist ending!", ja: "紛失：連載サスペンスのプロットが詰まったノート。発見された方、お願いですから最後の結末は読まないで！", contact: "Call Vance Express" },
+            { tag: "SERVICES", text: "Automated test runner. I break your code beautifully before your users can do it.", ja: "自動テストの自動実行。ユーザーの手によって泥臭く壊される前に、あなたのコードを美しくクラッシュさせます。", contact: "CI-CD Specialists" },
+            { tag: "PERSONALS", text: "Coffee machine seeking a dedicated programmer for a long-term, high-caffeine relationship.", ja: "コーヒーメーカーより。長期にわたる高カフェインな関係を築いてくれる、一途なプログラマーを募集中。", contact: "The Breakroom Corner" },
+            { tag: "WANTED", text: "Looking for a phantasm proof server rack. Current one keeps whispering old COBOL logs.", ja: "防霊対策済みのサーバーラックを求む。現在のラックは古いCOBOLのログを呪いのように囁き続けるため。", contact: "Box 666-GHOST" },
+            { tag: "FOR SALE", text: "A collection of 500 rare, perfectly dried tea leaves from the Far East. Perfect for long debugging nights.", ja: "極東から届いた、美しく乾燥された希少な茶葉500選。終わりの見えないデバッグの夜のお供に。", contact: "The Herbalist" },
+            { tag: "SERVICES", text: "Custom Git tree pruning. We untangle your branches so your project can breathe again.", ja: "特注のGitツリー剪定。もつれにもつれたブランチを解きほぐし、プロジェクトの風通しを良くします。", contact: "Octo-Prune Co." },
+            { tag: "HELP WANTED", text: "Urgent: Need a brave soul to clear cache on a legacy server. Caution: Ancient scripts inside.", ja: "至急：化石サーバーのキャッシュをクリアしてくれる勇敢な魂を求む。注意：内部は古代の魔術スクリプトだらけです。", contact: "Legacy Ops Team" },
+            { tag: "FOR RENT", text: "A desk with a view of Nippori station. High traffic, perfect inspiration for regional economic essays.", ja: "日暮里駅を一望できる特等席のデスク。行き交う人々が、地域経済のエッセイの最高のインスピレーションに。", contact: "Box 45-NIPPORI" },
+            { tag: "LOST & FOUND", text: "Found: A silver coin dated 1826. Found inside a hollow tree trunk in the mist.", ja: "拾得：1826年製の謎の銀貨。深い霧が立ち込める森の、空洞の木の幹から発見。", contact: "Station Master Office" },
+            { tag: "ANNOUNCEMENT", text: "The Great Banana Festival is postponed until the compiler finishes building the application.", ja: "【お知らせ】盛大なバナナフェスティバルは、コンパイラがアプリケーションのビルドを終えるまで延期となります。", contact: "The Committee" },
+            { tag: "SERVICES", text: "Deep network packet analysis. We find the exact microsecond your data stream gets lonely.", ja: "緻密なネットワークパケット解析。データ通信がほんの一瞬（マイクロ秒）途切れる原因を確実に特定します。", contact: "Net-Spy Inc." },
+            { tag: "WANTED", text: "Old, dusty blueprints of 19th-century banks. For academic historical research purposes, obviously.", ja: "19世紀の銀行の、埃をかぶった古い設計図。用途はあくまで『学術的な歴史研究』のためです、念のため。", contact: "Box 404-SHADOW" },
+            { tag: "FOR SALE", text: "Mechanical keyboard with extra loud clicks. Guaranteed to annoy your coworkers or roommates.", ja: "大爆音クリックのメカニカルキーボード。職場の同僚や同居人の神経を逆撫ですることを保証します。", contact: "Clicky Tech Ltd." },
+            { tag: "HELP WANTED", text: "Barista who can read error logs. Sometimes our espresso machine throws a 503 Service Unavailable.", ja: "エラーログが読めるバリスタ急募。当店の特製エスプレッソマシンが時々503エラーを吐いてフリーズするため。", contact: "Cafe Code Noir" },
+            { tag: "LOST & FOUND", text: "Lost: My patience with a flexible CSS flexbox container that refuses to center. Reward is a warm coffee.", ja: "紛失：意地でも中央揃えを拒否するCSS flexboxへの忍耐。見つけてくれた方には温かいコーヒーを奢ります。", contact: "Desperate Dev" },
+            { tag: "SERVICES", text: "Mystery plot consulting. Let us inject a thrilling plot twist into your boring corporate presentation.", ja: "ミステリープロットの出張相談。あなたの退屈な社内プレゼンに、誰もがハラハラするようなどんでん返しを仕込みます。", contact: "PlotTwist LLC" },
+            { tag: "WANTED", text: "A perfectly balanced financial ledger that balances itself automatically when nobody is looking.", ja: "誰も見ていない深夜のうちに、未払金や売掛金の帳尻を自動で完璧に合わせてくれる魔法の財務元帳を求む。", contact: "Box 999-AUDIT" },
+            { tag: "FOR SALE", text: "A box of vintage floppy disks containing text-based mystery games from the late 80s.", ja: "80年代後半のレトロなテキストベース・ミステリーゲームが詰まった、ヴィンテージのフロッピーディスクの箱。", contact: "Retro Collector" },
+            { tag: "FOR RENT", text: "A quiet room on the second floor. Note: Absolutely no third floor exists in this building.", ja: "2階にある静かなお部屋。注意：この建物には『3階』という概念は物理的に存在しません。", contact: "Landlord Smith" },
+            { tag: "ANNOUNCEMENT", text: "Warning: The server room is currently occupied by a very protective mother cat and her kittens.", ja: "【警告】現在、サーバー室は非常に警戒心の強い母猫とその子猫たちによって完全占拠されています。", contact: "Do Not Disturb" },
+            { tag: "SERVICES", text: "RegEx parsing wizardry. We make sense of patterns that look like your cat walked on the keyboard.", ja: "正規表現パースの魔術。猫がキーボードの上を散歩したようにしか見えない謎の文字列を解読します。", contact: "Pattern Masters" },
+            { tag: "HELP WANTED", text: "Assistant manager for a busy fast-food chain. Must excel at refunding customers and fixing frozen screens.", ja: "店舗マネージャー補佐を急募。理不尽なトラブルの返金処理と、フリーズしたPOSレジの修復が得意な方。", contact: "Golden Arches Box 1" },
+            { tag: "LOST & FOUND", text: "Found: A single black leather glove on the library floor. Smells like expensive French perfume.", ja: "拾得：図書館の床で片方だけの黒革の手袋。高級なフランス製香水の香りが微かに残っています。", contact: "Library Lost Desk" },
+            { tag: "WANTED", text: "A secret tunnel blueprint underneath the old city bank. Willing to pay in untraceable crypto tokens.", ja: "旧市街銀行の地下に眠る秘密の通路の設計図を求む。追跡不可能な暗号資産でのお支払いが可能です。", contact: "The Ghost Thief" },
+            { tag: "FOR SALE", text: "Ergonomic chair that vibrates every time a bug is found in your staging environment.", ja: "ステージング環境でコードのバグが検出されるたびに、持ち主を激しく揺さぶる人間工学に基づいた椅子。", contact: "BioTech Furniture" },
+            { tag: "SERVICES", text: "Algorithmic stock trading bots tuned to buy whenever a tech CEO posts a funny cat meme.", ja: "自動株取引アルゴリズム。IT企業のCEOがおもしろ猫ミームを投稿した瞬間に買い注文を入れるカスタム仕様。", contact: "Alpha Quant Co." },
+            { tag: "HELP WANTED", text: "Sound engineer to analyze the mysterious humming sound coming from the server room closet.", ja: "音響エンジニア募集。サーバー室の片隅にあるクローゼットから鳴り響く、不気味な低音を分析してください。", contact: "Ops Ext. 9" },
+            { tag: "FOR RENT", text: "A rustic cabin in the mountains. Complete with a typewriter, hot cocoa, and absolutely zero cell service.", ja: "山奥の素朴なログハウス。タイプライターと特製ホットココア完備。携帯の電波は1ミリも入りません。", contact: "Solitude Co." },
+            { tag: "LOST & FOUND", text: "Lost: A silver fountain pen engraved with 'Vance'. Left behind at the scene of the diamond heist.", ja: "紛失：『Vance』と刻印された銀の万年筆。例のダイヤモンド強盗の現場に置き忘れてしまいました。", contact: "Return to Vance Office" },
+            { tag: "ANNOUNCEMENT", text: "The annual Hide and Seek championship was won by a memory leak that hid in the system for six months.", ja: "【報告】今年のかくれんぼ世界大会は、システム内部に6ヶ月間も潜伏し続けた『メモリリーク』の優勝です。", contact: "Tech Comm" },
+            { tag: "SERVICES", text: "Database normalization surgery. We turn your chaotic giant Excel sheet into a sleek SQL masterpiece.", ja: "データベースの構造正常化手術。あなたの混沌とした巨大Excelシートを、洗練されたSQLの傑作へと生まれ変わらせます。", contact: "DataDocs Inc." },
+            { tag: "WANTED", text: "A mentor who can explain advanced asynchronous JavaScript using only metaphors about baking pastries.", ja: "非同期処理（Async/Await）の仕組みを、焼き菓子のレシピの比喩だけで完璧に解説してくれるメンターを募集。", contact: "Box 55-ASYNC" },
+            { tag: "FOR SALE", text: "A magical mug that keeps your coffee at exactly 65°C, but only if you write clean code.", ja: "魔法のマグカップ。飲み物を正確に65°Cに保ちますが、あなたが綺麗なコードを書いている間しか作動しません。", contact: "SmartMug Ltd." },
+            { tag: "HELP WANTED", text: "Social media manager for a phantom detective agency. Must be comfortable posting cryptic clues.", ja: "SNS運用担当者募集。正体不明の怪盗探偵のアカウントで、タイムラインに不可解なヒントを投稿するお仕事です。", contact: "Box 00-SHADOW" },
+            { tag: "LOST & FOUND", text: "Found: A gold pocket watch stuck at exactly 12:05. Found inside a grandfather clock cabinet.", ja: "拾得：12時5分ピッタリで時を止めた金の懐中時計。大きな古い柱時計の内部から発見されました。", contact: "Chronos Antiques" },
+            { tag: "SERVICES", text: "AI training supervisor. I teach large language models how to meow properly when asked.", ja: "AI調教コンサルタント。大規模言語モデルに、ユーザーから頼まれた際に可愛く『にゃー』と鳴く方法を教育します。", contact: "AI-Cat Corp" },
+            { tag: "WANTED", text: "An elegant black fountain pen that writes beautiful prose and never leaks ink on your hands.", ja: "美しい散文を滑らかに紡ぎ出し、決して持ち主の指先をインクで汚さない極上の黒万年筆を求む。", contact: "The Author's Club" },
+            { tag: "FOR SALE", text: "A stack of old regional economics textbooks. Great for studying or propping up a unstable desk leg.", ja: "古い地域経済学の教科書セット。勉強用としてはもちろん、ガタつくデスクの脚の支えとしても非常に優秀です。", contact: "Box 14-BOOK" },
+            { tag: "FOR RENT", text: "A small workspace inside a converted train car. Very cozy, very vintage, high-speed fiber internet.", ja: "引退した列車を改造した秘密のワークスペース。どこか懐かしく隠れ家のような空間。超高速光回線完備。", contact: "Trackside Offices" },
+            { tag: "ANNOUNCEMENT", text: "The server migration is complete. If you see a phantom ship in your dashboard, please clear browser cookies.", ja: "【通知】サーバーの移行作業が完了。ダッシュボードに幽霊船の影が見える場合は、ブラウザのキャッシュを破棄してください。", contact: "IT Admin" },
+            { tag: "SERVICES", text: "Automated cash drawer auditing scripts. Speed up your retail manager cash outs by 400%.", ja: "レジ現金自動精算監査システム。煩わしい店舗マネージャーの深夜の現金照合作業を400%高速化します。", contact: "Logistics Pro" },
+            { tag: "HELP WANTED", text: "Translator fluent in both ancient Latin law books and modern Node.js stack traces.", ja: "求人：古代ラテン語の法律文書と、現代のNode.jsの謎のスタックトレースの両方を滑らかに翻訳できる方。", contact: "Box 88-LEX" },
+            { tag: "LOST & FOUND", text: "Lost: A bunch of keys attached to a banana keychain. Crucial for opening the warehouse backdoor.", ja: "紛失：バナナのキーホルダーがついた鍵束。深夜に倉庫の裏口のセキュリティを解除するのに必要不可欠です。", contact: "Urgent. Reward!" },
+            { tag: "WANTED", text: "A quiet mechanical keyboard that sounds like a soft autumn rain rather than a machine gun.", ja: "マシンガンの連射音のような爆音ではなく、静かな秋の雨の日のような打鍵音が響くメカニカルキーボードを求む。", contact: "Box 34-SILENCE" },
+            { tag: "FOR SALE", text: "A high-end espresso machine that only works when all unit tests pass in your project repository.", ja: "最高級エスプレッソマシン。あなたのプロジェクトのすべてのテストが完璧にパスした時のみ、至高の一杯を淹れます。", contact: "DevCafe Supply" },
+            { tag: "SERVICES", text: "Cyber security audits. We test if your passwords are easily guessable by clever raccoons.", ja: "サイバーセキュリティ監査。あなたの社外秘パスワードが、近所の小賢しいアライグマに破られないか厳格にテストします。", contact: "TrashCan Security" },
+            { tag: "HELP WANTED", text: "Talented designer to create book covers for an ongoing serialized thriller fanfiction series.", ja: "専属デザイナー募集。現在ネットで連載中の、ハラハラが止まらない二次創作サスペンス小説の表紙デザイン。", contact: "Box 90-PLOT" },
+            { tag: "FOR RENT", text: "A beautifully lit studio apartment. Ideal for late-night programming or painting oil portraits.", ja: "アンバーな照明が美しいアトリエ付きアパート。深夜の没頭コーディング、あるいは油絵の制作に最高の環境です。", contact: "Atelier Rentals" },
+            { tag: "LOST & FOUND", text: "Found: A pair of reading glasses inside the sociology section of the university library.", ja: "拾得：大学図書館の社会学書コーナーにて、読書用メガネを発見。心当たりのある学生は事務室まで。", contact: "Library Admin Office" },
+            { tag: "ANNOUNCEMENT", text: "Reminder: Drinking coffee directly from the server cooling loop is strictly prohibited by safety laws.", ja: "【重要】安全衛生法に基づき、サーバーの液冷ループから冷えたコーヒーを直接ストローで飲む行為は固く禁止されています。", contact: "HR Dept" },
+            { tag: "SERVICES", text: "Custom API construction. We bridge your frontend and backend seamlessly with ironclad structures.", ja: "特製APIの設計・構築。あなたの自慢のフロントエンドとバックエンドを、鉄壁の構造でシームレスに架橋します。", contact: "Bridge Builders" },
+            { tag: "WANTED", text: "A comfortable vintage velvet armchair suitable for reading long mystery novels on rainy Sundays.", ja: "雨の降る静かな日曜日に、何時間も探偵小説の世界に没頭できるような、座り心地のいいベルベットの椅子を求む。", contact: "Box 21-CHAIR" },
+            { tag: "FOR SALE", text: "A box of perfectly round 500-yen coins. Great for cash drawer testing or matching game tokens.", ja: "ピカピカの500円硬貨が詰まった箱。釣銭マシンのテストや、レジ誤差の検証トレーニング用備品として最適。", contact: "Box 72-COIN" },
+            { tag: "HELP WANTED", text: "Urgent: Need a frontend engineer who can fix an old layout that breaks whenever a user views it on mobile.", ja: "至急：ユーザーがスマートフォンで閲覧するたびにガタガタに崩れてしまう、古いWEBレイアウトの修復依頼。", contact: "Responsive Labs" },
+            { tag: "LOST & FOUND", text: "Lost: A silver charm shaped like a cat's paw. Last seen near the accounting department office.", ja: "紛失：猫の肉球を象った銀のチャーム。最後に目撃されたのは、2階の会計部オフィスの廊下付近でした。", contact: "Reward! Box 5" },
+            { tag: "SERVICES", text: "Docker image optimization. We shrink your bloated 2GB images down to a sleek, compact 50MB card.", ja: "Dockerイメージの軽量化手術。2GBに肥大化した無骨なイメージを、わずか50MBの洗練されたカードに縮めます。", contact: "ShipShape Inc." },
+            { tag: "WANTED", text: "A vintage copper kettle that whistles melodically when the water reaches a perfect rolling boil.", ja: "お湯が完璧な沸点に達したとき、まるでフルートのように美しい音色で知らせてくれるアンティークの銅製ケトル。", contact: "Tea Connoisseur" },
+            { tag: "FOR SALE", text: "An antique safe from 1890. Perfect condition, combination code is lost. Sold as an ornamental box.", ja: "1890年製のアンティーク金庫。状態は極上ですがダイヤル番号が永久に不明なため、美しい置物として販売します。", contact: "Vintage Vaults" },
+            { tag: "FOR RENT", text: "A small greenhouse workspace surrounded by rare tropical ferns. Boosts programming mood instantly.", ja: "希少な熱帯の植物に囲まれた、小さな温室ワークスペース。マイナスイオンでデバッグのストレスを極限まで相殺します。", contact: "GreenDesk Co." },
+            { tag: "ANNOUNCEMENT", text: "The university accounting lecture has been relocated to the main auditorium due to high mystery novel readings.", ja: "【講義連絡】会計学の講義は、受講生の間でミステリー小説の回し読みが爆発的に流行したため、急遽大講堂に変更されました。", contact: "Dean's Office" },
+            { tag: "SERVICES", text: "JSON parsing insurance. Protect your web application from crashing due to unexpected null fields.", ja: "JSONパース安全保険。予期せぬ『データの中身が空っぽ（null）』によるシステム全体の爆発からアプリを守ります。", contact: "NullProof Corp" },
+            { tag: "HELP WANTED", text: "Data analyst to help track banana consumption trends vs. coding productivity over six months.", ja: "データアナリスト募集。6ヶ月間にわたる『バナナの消費量』と『コードの生産性』の因果関係をグラフ化する仕事。", contact: "FruitStats Lab" },
+            { tag: "LOST & FOUND", text: "Found: A encrypted flash drive under a park bench near Nippori station. Whispers strange numbers.", ja: "拾得：日暮里駅近くのベンチの下で、暗号化されたUSBを発見。耳を澄ますと、奇妙な数列を囁き続けています。", contact: "Box 101-DATA" },
+            { tag: "WANTED", text: "A sleek, minimalist desktop stand that elegantly keeps wires hidden from sight.", ja: "デスク周りのゴチャついた配線たちを、何事もなかったかのように美しく目隠ししてくれるミニマルな卓上スタンドを求む。", contact: "DeskSetup Pro" },
+            { tag: "FOR SALE", text: "A legendary vintage fountain pen. Rumored to have drafted three award-winning detective stories.", ja: "伝説の万年筆。かつて、賞に輝いた傑作ミステリー小説を3本もノンストップで書き上げたという曰く付きの一品。", contact: "The Quill Emporium" },
+            { tag: "SERVICES", text: "Asynchronous function optimization. We stop your database queries from waiting in line forever.", ja: "非同期処理の最適化。あなたのデータベースへの問い合わせが、満員電車の改札前でいつまでも足止めされるのを防ぎます。", contact: "AwaitNoMore" },
+            { tag: "HELP WANTED", text: "Mystery dinner theater actor to play the role of a brilliant software architect with a dark secret.", ja: "体験型ミステリー劇のキャスト募集。演じる役は『誰も知らない裏の顔を持つ、天才ソフトウェア設計者』です。", contact: "Drama Club Box 8" },
+            { tag: "FOR RENT", text: "A vintage caravan parked near a lake. Comes with a writing desk, a warm blanket, and infinite peace.", ja: "湖畔に佇むレトロなキャンピングカー。物語を紡ぐための小さな机、温かい毛布、そして果てしない静寂を提供します。", contact: "Wanderlust Stays" },
+            { tag: "LOST & FOUND", text: "Lost: A black umbrella with a silver handle shaped like a bird. Left at the regional economics seminar.", ja: "紛失：鳥の形をした銀の持ち手がついた黒い傘。昨日開催された地域経済学のゼミの教室に置き忘れてしまいました。", contact: "EcoDept Office" },
+            { tag: "ANNOUNCEMENT", text: "The Local Area Network is undergoing maintenance. Please use physical messenger pigeons for urgent data.", ja: "【お知らせ】現在ネットワーク回線のメンテナンス中。緊急のデータ送信には、物理的な伝書鳩の利用を推奨します。", contact: "NetOps" },
+            { tag: "SERVICES", text: "UI/UX polishing. We turn rough, blocky corporate panels into smooth Web Magazine experiences.", ja: "UI/UXのブラッシュアップ。無骨で四角四面な社内システム画面を、まるで高級紙のような美しいWEBマガジンに変貌させます。", contact: "Editorial Design Co." },
+            { tag: "WANTED", text: "An old map of Tokyo's hidden underground passages from the early 1920s. Cash paid on delivery.", ja: "1920年代初頭の東京に実在したという、秘密の地下通路の古地図を求む。状態が良ければ現金をはずします。", contact: "The History Hunter" },
+            { tag: "FOR SALE", text: "A pack of vintage neon sticker labels. Excellent for color-coding server cables or ledger books.", ja: "ヴィンテージ調のネオンステッカー。分厚い経理元帳のインデックスや、乱雑なサーバー配線の色分け整理に抜群の威力。", contact: "OfficeMax Retro" },
+            { tag: "HELP WANTED", text: "Systems administrator who knows how to deal with an AI assistant that leaves cryptic poetry in logs.", ja: "システム管理者急募。ログの末尾に、誰も解読できない不可解なポエムを残していく風変わりなAIアシスタントの教育係。", contact: "CoreTech Inc." },
+            { tag: "LOST & FOUND", text: "Lost: A small leather wallet containing a university student ID card. Found near the law department.", ja: "紛失：大学生の学生証が入った小さな本革の財布。法学部の講義棟の近くで落とした可能性が高いです。", contact: "Campus Security" },
+            { tag: "SERVICES", text: "Node.js code reviews. We find the exact line that makes your server slow down when users tap buttons.", ja: "Node.jsコードレビュー。ユーザーが画面のボタンを叩いた瞬間に、サーバーの動きをほんの一瞬引っ張っている正確な1行を特定。", contact: "NodeInspect" },
+            { tag: "WANTED", text: "A clock that moves 20% slower during the weekends and 20% faster during heavy retail shift management.", ja: "時間が週末だけ20%ゆっくり進み、人手不足の過酷な店舗運営シフトの最中だけ20%早く進む奇跡の時計を求む。", contact: "Manager Box 9" },
+            { tag: "FOR SALE", text: "A high-end condenser microphone. Perfect for podcasting about dark historical conspiracies or code.", ja: "最高級コンデンサーマイク。闇の歴史的陰謀論や、夜更けのディープなテクノロジーについて独り言を語るポッドキャストに。", contact: "AudioLab Ltd." },
+            { tag: "FOR RENT", text: "A historic brick studio with high ceilings and huge windows. Perfect creative sandbox for developers.", ja: "高い天井と大きな窓が特徴の歴史的なレンガ造りスタジオ。エンジニアが時間を忘れてモノ作りに没頭できる最高の砂場。", contact: "Brickworks Ltd." },
+            { tag: "ANNOUNCEMENT", text: "The mysterious footsteps heard in the basement were just a cron job executing an old bash script.", ja: "【安心のお知らせ】地下室から聞こえた謎の足音の正体は、深夜に古いbashスクリプトを定期実行していたただのcronジョブでした。", contact: "IT Security Team" },
+            { tag: "SERVICES", text: "Custom typography design. We make your headings look like high-end Italian fashion magazines.", ja: "特注タイポグラフィ。WEBサイトの味気ない大見出しを、ミラノの高級ファッション誌の表紙のような風格に仕立て上げます。", contact: "FontGlow Studio" },
+            { tag: "WANTED", text: "A cozy cat bed that securely attaches to the top of a warm dual-monitor setup. High priority.", ja: "優しく熱を帯びたデュアルモニターの上部に、安全に引っ掛けられる特製猫用ベッドを求む。当家のお猫様のために最優先。", contact: "Box 55-CAT" },
+            { tag: "FOR SALE", text: "The ultimate developer setup: Mechanical inputs, warm ambient light, and a box of fresh bananas.", ja: "究極の開発者環境セット：極上の打鍵感のキーボード、温かみのあるアンバーな環境光、そして一箱の新鮮なバナナを添えて。", contact: "Box 100-FINISH" }
+        ];
+
+        // --- 🎲 ランダム抽出 ＆ 画面への流し込み ---
+
+        // 1. メインストーリーをランダム表示（日本語訳も一緒にセットするにゃ！）
+        const randomMystery = mysteries[Math.floor(Math.random() * mysteries.length)];
+        document.getElementById('mystery-title').innerText = randomMystery.title;
+        document.getElementById('mystery-body').innerText = randomMystery.body;
+        // 🌟 ここで日本語訳をストーリーカードの下部に流し込むにゃ
+        document.getElementById('mystery-ja').innerText = randomMystery.ja;
+
+        // 2. 100種の三行広告からランダムに4つ選んで表示
+        function displayRandomClassifieds() {
+            const poolCopy = [...classifiedsPool];
+            const selectedItems = [];
+
+            for (let i = 0; i < 4; i++) {
+                if (poolCopy.length === 0) break;
+                const randomIndex = Math.floor(Math.random() * poolCopy.length);
+                const chosen = poolCopy.splice(randomIndex, 1)[0];
+                selectedItems.push(chosen);
+            }
+
+            const container = document.getElementById('classifieds-container');
+            container.innerHTML = selectedItems.map(item => `
+                <div class="classified-item">
+                    <span class="classified-tag">${item.tag}</span>
+                    <p class="classified-text">"${item.text}"</p>
+                    <span class="classified-ja">${item.ja}</span>
+                    <span class="classified-contact">${item.contact}</span>
+                </div>
+            `).join('');
+        }
+
+        displayRandomClassifieds();
+    </script>
+</body>
+</html>
