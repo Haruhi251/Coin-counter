@@ -112,7 +112,7 @@ const server = http.createServer((req, res) => {
   console.error(`[${new Date().toISOString()}] Server Error`, e);
 });
 
-const port = 8000;
-server.listen(port, () => {
-  console.log(`Server running on port ${port} `);
+const port = process.env.PORT || 8000;
+server.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
 });
